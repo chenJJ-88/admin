@@ -1,10 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import RootRoutes from '@@/config/routes'
+import App from './App'
 import './index.css'
-
+import { ConfigProvider } from 'antd'
+import { BrowserRouter as Router } from 'react-router-dom'
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    {
+      RootRoutes()
+    }
+  </Router>,
 )
