@@ -16,7 +16,7 @@ function RootRoutes() {
         <Route path="admin/sub-page2" element={<SubPage2 />} />
         <Route path="welcome" element={<Welcome />} />
       </Route>
-      <Route path='/' element={<Navigate to='login'></Navigate>}></Route>
+      <Route path='/' element={<Navigate to='home'></Navigate>}></Route>
       <Route path='*' element={<NotFound />}></Route>
     </Routes >
   )
