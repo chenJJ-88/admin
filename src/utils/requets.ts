@@ -27,6 +27,7 @@ class RequestError extends Error {
   }
 }
 const checkStatus = (response: any) => {
+
   // 错误处理
   if ((response.status >= 200 && response.status < 300) || response.status === 400 || response.status === 500) {
     return response
@@ -40,8 +41,46 @@ const checkStatus = (response: any) => {
   throw new RequestError(errText, response.status, response)
 }
 
-const checkServerCode = (response: any,)
-export default function request({ url, options }: { url: string, options: any }) {
+const checkServerCode = (response: { code: string | number; data: any; msg: any; headers: any }, newOptions: { showMsg: any; }) => {
+  let tempCode = Number(response.code);
+
+  if (tempCode >= 200 && tempCode < 300) {
+    if (newOptions.showMsg && !response.data) {
+      notification.success({
+        message: response.msg || codeMessage[response.code]
+      });
+    }
+    return {
+      success: true,
+      ...response
+    };
+  }
+  if (!newOptions.showMsg) {
+    return response;
+  }
+
+  if (tempCode === 400) {
+    notification.error({
+      message: response.msg || codeMessage[response.code]
+    });
+  } else if (tempCode === 401) {
+    if (window.location.hash.endsWith('/login')) return false;
+    notification.error({
+      message: response.msg || codeMessage[response.code]
+    });
+    location.replace('/login');
+  } else if (tempCode === 404) {
+    notification.error({
+      message: response.msg || codeMessage[response.code]
+    });
+  } else if (tempCode === 500) {
+    notification.error({
+      message: response.msg || codeMessage[response.code]
+    });
+  }
+  return response;
+};
+export default function request(url: string, options: any): Promise<any> {
   const defaultOptions = {
     credentials: 'include',
     method: 'POST'
@@ -65,19 +104,23 @@ export default function request({ url, options }: { url: string, options: any })
   if (newOptions.params) {//公司后端post 请求还是将请求参数放在query上
     fetchUrl = url + "?" + jsonToRul(newOptions.params)
   }
-  fetch(
+  return fetch(
     fetchUrl,
     newOptions
   ).then(checkStatus)
     .then(res => {
+      const token = res.headers.get('Authorization');
+      if (token) {
+        localStorage.setItem('token', token);
+      }
       if (res.method === 'DELETE' || res.status === 204 || res.status === 205) {
         return res.text()
       }
       return res.json();
     })
-    // .then(res => {
-    //   return checkServerCode(res, newOptions)
-    // })
+    .then(res => {
+      return checkServerCode(res, newOptions)
+    })
     .catch(error => {
       if (error instanceof RequestError) {//如果是自己定义的error
         console.log(error.message);

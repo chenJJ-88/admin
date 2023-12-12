@@ -17,7 +17,7 @@
     "@tsparticles/react": "^3.0.0",
     "antd": "^5.11.0",
     "archiver": "^6.0.1",
-    "axios": "^1.6.1",
+    "axios": "^1.6.2",
     "classnames": "^2.3.2",
     "moment": "^2.29.4",
     "qs": "^6.11.2",

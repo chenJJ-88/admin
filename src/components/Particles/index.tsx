@@ -22,8 +22,8 @@ function index() {
         options={{
           background: {
             color: {
-              // value: '#2d3a4b',
-              value: '#000000'
+              value: '#2d3a4b',
+              // value: '#000000'
             },
           },
           fpsLimit: 120,
@@ -92,8 +92,6 @@ function index() {
       />
     }
   </>
-
-
 }
 
 export default index

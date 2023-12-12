@@ -14,8 +14,13 @@ const menuData = [
     access: './canAdmin',
     routes: [
       {
-        path: '/home/admin/sub-page1',
+        path: '/home/sub-page1',
         name: '一级页面',
+        icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
+      },
+      {
+        path: '/home/sub-page2',
+        name: '二级页面',
         icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
       },
       // 其他子页面的配置

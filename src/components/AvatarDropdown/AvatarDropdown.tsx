@@ -1,8 +1,7 @@
 // import { outLogin } from '@/services/ant-design-pro/api';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import './index.less'
-import { Spin } from 'antd';
-import { stringify } from 'qs';
+import { removeAll } from '@/utils/authority';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
@@ -31,28 +30,15 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
    * 退出登录，并且将当前的 url 保存
    */
   const loginOut = async () => {
-
+    removeAll()
+    window.location.href = '/login'
   };
-  // const actionClassName = useEmotionCss(({ token }) => {
-  //   return {
-  //     display: 'flex',
-  //     height: '48px',
-  //     marginLeft: 'auto',
-  //     overflow: 'hidden',
-  //     alignItems: 'center',
-  //     padding: '0 8px',
-  //     cursor: 'pointer',
-  //     borderRadius: token.borderRadius,
-  //     '&:hover': {
-  //       backgroundColor: token.colorBgTextHover,
-  //     },
-  //   };
-  // });
-  // const { initialState, setInitialState } = useModel('@@initialState');
 
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
-
+      if (event.key === 'logout') {
+        loginOut();
+      }
     },
     [],
   );
